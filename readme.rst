@@ -116,7 +116,11 @@ urls.py
 >>>     # 'template_name': 'qartez/rel_alternate_hreflang_sitemap.xml' only in case
 >>>     # if you are going to use the ``qartez.RelAlternateHreflangSitemap``.
 >>>     (r'^sitemap-(?P<section>.+)\.xml$', 'django.contrib.sitemaps.views.sitemap',
->>>      {'sitemaps': sitemaps, 'template_name': 'qartez/rel_alternate_hreflang_sitemap.xml'}),
+         {
+            'sitemaps': sitemaps,
+            'template_name': 'qartez/rel_alternate_hreflang_sitemap.xml'
+         }
+        ),
 >>> )
 
 In order to just get a better idea what kind of models and views are given in the example, see the code parts
@@ -129,7 +133,8 @@ foo/models.py
 >>>     slug = models.SlugField(_("Slug"), unique=True)
 >>>     body = models.TextField(_("Body"))
 >>>     date_published = models.DateTimeField(_("Date published"), blank=True, \
-                                              null=True, default=datetime.datetime.now())
+                                              null=True, \
+                                              default=datetime.datetime.now())
 >>>
 >>>     # Image to be used for XML images sitemap.
 >>>     image = models.ImageField(_("Headline image"), blank=True, null=True, \
