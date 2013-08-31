@@ -1,0 +1,17 @@
+*.py[cod]
+.hgignore~
+.gitignore~
+.hg/
+.git/
+.hgtags
+
+example/db/
+example/tmp/
+example/media/static/
+example/static/
+builddocs/
+builddocs.zip
+build/
+dist/
+src/django_qartez.egg-info
+MANIFEST.in~

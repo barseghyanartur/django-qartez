@@ -1,0 +1,2 @@
+include readme.rst
+recursive-include src/qartez/templates *

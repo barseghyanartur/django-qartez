@@ -1,0 +1,4 @@
+User-agent: *
+
+Sitemap: http://example.com/sitemap.xml
+Sitemap: http://example.com/sitemap-foo-images.xml
