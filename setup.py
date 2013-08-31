@@ -27,7 +27,7 @@ setup(
     author = 'Artur Barseghyan',
     author_email = 'artur.barseghyan@gmail.com',
     license = 'GPL 2.0/LGPL 2.1',
-    url = 'https://bitbucket.org/barseghyanartur/qartez',
+    url = 'https://bitbucket.org/barseghyanartur/django-qartez',
     package_dir = {'':'src'},
     packages = find_packages(where='./src'),
     package_data = {'qartez': templates},
