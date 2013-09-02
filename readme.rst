@@ -26,12 +26,12 @@ Latest stable version from source:
 
 2. Add `qartez` to your ``INSTALLED_APPS``
 ------------------------------------------------------
-    >>> INSTALLED_APPS = (
-    >>> # ...
-    >>> 'django.contrib.sitemaps',
-    >>> 'qartez',
-    >>> # ...
-    >>> )
+>>> INSTALLED_APPS = (
+>>>     # ...
+>>>     'django.contrib.sitemaps',
+>>>     'qartez',
+>>>     # ...
+>>> )
 
 Usage and examples
 ======================================================
@@ -88,6 +88,9 @@ foo/sitemap.py
 >>> # ---------------------- Alternate hreflang sitemap part ---------------
 >>> # Alternate hreflang sitemap.
 >>> class ArticleSitemap(RelAlternateHreflangSitemap):
+>>>     # If you want to serve the links on HTTPS.
+>>>     protocol = 'https'
+>>>
 >>>     def alternate_hreflangs(self, obj):
 >>>         return [('en-us', obj.alternative_object_url),]
 >>>
@@ -96,8 +99,8 @@ foo/sitemap.py
 
 urls.py
 ------------------------------------------------------
->>> from foo.sitemap import foo_item_images_sitemap, foo_static_sitemap, FooItemSitemap
->>> from foo.sitemap import FooItemAlternateHreflangSitemap
+>>> from foo.sitemap import foo_item_images_sitemap, foo_static_sitemap
+>>> from foo.sitemap import FooItemAlternateHreflangSitemap, FooItemSitemap
 >>>
 >>> sitemaps = {
 >>>     'foo-items': FooItemSitemap,
@@ -108,20 +111,21 @@ urls.py
 >>> urlpatterns = patterns('',
 >>>     # Sitemaps
 >>>     (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.index', \
-         {'sitemaps': sitemaps}),
->>>     (r'^sitemap-foo-images\.xml$', 'qartez.views.render_images_sitemap', \
-         {'sitemaps': foo_item_images_sitemap}),
+>>>      {'sitemaps': sitemaps}),
 >>>
->>>     # Note, that it's necessary to add the
->>>     # 'template_name': 'qartez/rel_alternate_hreflang_sitemap.xml' only in case
->>>     # if you are going to use the ``qartez.RelAlternateHreflangSitemap``.
->>>     (r'^sitemap-(?P<section>.+)\.xml$', 'django.contrib.sitemaps.views.sitemap',
-         {
-            'sitemaps': sitemaps,
-            'template_name': 'qartez/rel_alternate_hreflang_sitemap.xml'
-         }
-        ),
+>>>     (r'^sitemap-foo-images\.xml$', 'qartez.views.render_images_sitemap', \
+>>>      {'sitemaps': foo_item_images_sitemap}),
 >>> )
+
+Note, that it's necessary to add the 'template_name': 'qartez/rel_alternate_hreflang_sitemap.xml'
+only in case if you are going to use the ``qartez.RelAlternateHreflangSitemap``.
+
+>>> (r'^sitemap-(?P<section>.+)\.xml$', 'django.contrib.sitemaps.views.sitemap',
+>>>  {
+>>>     'sitemaps': sitemaps,
+>>>     'template_name': 'qartez/rel_alternate_hreflang_sitemap.xml'
+>>>  }
+>>> ),
 
 In order to just get a better idea what kind of models and views are given in the example, see the code parts
 below.
@@ -133,12 +137,12 @@ foo/models.py
 >>>     slug = models.SlugField(_("Slug"), unique=True)
 >>>     body = models.TextField(_("Body"))
 >>>     date_published = models.DateTimeField(_("Date published"), blank=True, \
-                                              null=True, \
-                                              default=datetime.datetime.now())
+>>>                                           null=True, \
+>>>                                           default=datetime.datetime.now())
 >>>
 >>>     # Image to be used for XML images sitemap.
 >>>     image = models.ImageField(_("Headline image"), blank=True, null=True, \
-                                  upload_to='foo-images')
+>>>                               upload_to='foo-images')
 >>>
 >>>     # URL to be used for alternative hreflang attribute.
 >>>     alternative_url = models.URLField(_("Alternative URL"), blank=True, null=True)
@@ -164,13 +168,13 @@ foo/views.py
 >>> def welcome(request, template_name='foo/welcome.html'):
 >>>     context = {}
 >>>     return render_to_response(template_name, context, \
-                                  context_instance=RequestContext(request))
+>>>                               context_instance=RequestContext(request))
 >>>
 >>> # Service contact page
 >>> def contact(request, template_name='foo/contact.html'):
 >>>     context = {}
 >>>     return render_to_response(template_name, context, \
-                                  context_instance=RequestContext(request))
+>>>                               context_instance=RequestContext(request))
 
 foo/urls.py
 ------------------------------------------------------
@@ -178,7 +182,7 @@ foo/urls.py
 >>>     # ...
 >>>     # Contact URL
 >>>     url(r'^contact/$', view='contact', name='foo.contact'),
->>>
+>>>     # ...
 >>>     # Welcome URL
 >>>     url(r'^welcome/$', view='welcome', name='foo.welcome'),
 >>>     # ...

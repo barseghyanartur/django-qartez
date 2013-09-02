@@ -42,6 +42,9 @@ class FooItemAlternateHreflangSitemap(RelAlternateHreflangSitemap):
     """
     Alternative URL.
     """
+    # If you want to serve the links on HTTPS.
+    protocol = 'https'
+
     def alternate_hreflangs(self, item):
         return [('en-us', item.alternative_url),]
 

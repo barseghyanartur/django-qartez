@@ -1,6 +1,6 @@
 __title__ = 'qartez'
-__version__ = '0.3'
-__build__ = 0x000003
+__version__ = '0.4'
+__build__ = 0x000004
 __author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
 __all__ = ('ImagesSitemap', 'StaticSitemap', 'RelAlternateHreflangSitemap',)
 
@@ -149,12 +149,12 @@ class ImagesSitemap(GenericSitemap):
         for item in self.paginator.page(page).object_list:
             loc = self.__get('location', item, None)
             if loc and PREPEND_LOC_URL_WITH_SITE_URL:
-                loc = "http://%s%s" % (unicode(domain), unicode(loc))
+                loc = "%s://%s%s" % (protocol, unicode(domain), unicode(loc))
 
             image_loc = self.__get('image_location', item, None)
             if image_loc and PREPEND_IMAGE_LOC_URL_WITH_SITE_URL:
                 try:
-                    image_loc = "http://%s%s" % (unicode(domain), unicode(image_loc))
+                    image_loc = "%s://%s%s" % (protocol, unicode(domain), unicode(image_loc))
                 except Exception, e:
                     continue
 
@@ -360,7 +360,7 @@ class RelAlternateHreflangSitemap(Sitemap):
 
         urls = []
         for item in self.paginator.page(page).object_list:
-            loc = "http://%s%s" % (domain, self.__get('location', item))
+            loc = "%s://%s%s" % (protocol, domain, self.__get('location', item))
             url_info = {
                 'location': loc,
                 'lastmod': self.__get('lastmod', item, None),

@@ -1,3 +1,7 @@
+__title__ = 'qartez'
+__version__ = '0.4'
+__build__ = 0x000004
+__author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
 __all__ = ('get_setting',)
 
 from django.conf import settings
