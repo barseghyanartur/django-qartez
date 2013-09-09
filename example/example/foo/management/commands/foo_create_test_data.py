@@ -1,5 +1,12 @@
-from string import translate, maketrans, punctuation
 import random
+
+from six import print_, PY2, PY3
+from six.moves import range
+
+if PY2:
+    from string import translate, maketrans, punctuation
+else:
+    from string import punctuation
 
 import radar
 
@@ -86,12 +93,16 @@ FACTORY = """
     dictum id.
     """
 
-split_words = lambda f: list(set(translate(f.lower(), maketrans(punctuation, ' ' * len(punctuation))).split()))
+if PY2:
+    split_words = lambda f: list(set(translate(f.lower(), maketrans(punctuation, ' ' * len(punctuation))).split()))
+else:
+    split_words = lambda f: list(set(f.lower().translate(str.maketrans("", "", punctuation)).split()))
+
 split_sentences = lambda f: f.split('?')
 
 WORDS = split_words(FACTORY)
 SENTENCES = split_sentences(FACTORY)
-IMAGE_FACTORY = (
+IMAGE_FACTORY = [
     'foo-images/2010-1-19-17-2-38.jpg',
     'foo-images/2010-5-31-15-11-2.jpg',
     'foo-images/2010-5-31-15-14-32.jpg',
@@ -112,23 +123,29 @@ IMAGE_FACTORY = (
     'foo-images/2012-5-24-7-43-56.jpg',
     'foo-images/2012-9-29-11-52-30.jpg',
     'foo-images/2013-2-19-4-53-17.jpg'
-)
+]
 
 NUM_ITEMS = 50
 
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        words = WORDS
-        images = IMAGE_FACTORY
-        url_parts = range(0, NUM_ITEMS)
+        words = WORDS[:]
+        images = IMAGE_FACTORY[:]
+        url_parts = list(range(0, NUM_ITEMS))
 
-        for index in xrange(NUM_ITEMS):
+        for index in range(NUM_ITEMS):
             i = FooItem()
             random_name = words[random.randint(0, len(words) - 1)]
             random_image = images[random.randint(0, len(images) - 1)]
-            i.title = unicode(random_name).capitalize()
+
+            if PY2:
+                i.title = unicode(random_name).capitalize()
+                i.body = unicode(SENTENCES[random.randint(0, len(SENTENCES) - 1)])
+            else:
+                i.title = str(random_name).capitalize()
+                i.body = str(SENTENCES[random.randint(0, len(SENTENCES) - 1)])
+
             i.slug = slugify(i.title)
-            i.body = unicode(SENTENCES[random.randint(0, len(SENTENCES) - 1)])
             i.date_published = radar.random_datetime()
             i.image = random_image
             i.alternative_url = 'http://en-us.example.com/%s/' % url_parts.pop(0)
@@ -147,6 +164,6 @@ class Command(BaseCommand):
                 if 0 == len(url_parts):
                     url_parts = random.randrange(0, NUM_ITEMS)
 
-            except Exception, e:
-                print e
+            except Exception as e:
+                print_(e)
                 pass

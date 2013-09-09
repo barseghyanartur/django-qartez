@@ -31,7 +31,7 @@ def detail(request, slug, template_name='foo/detail.html'):
     """
     try:
         item = FooItem._default_manager.get(slug=slug)
-    except Exception, e:
+    except Exception as e:
         raise Http404
 
     context = {'item': item}

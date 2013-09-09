@@ -1,10 +1,12 @@
-__title__ = 'qartez'
-__version__ = '0.4'
-__build__ = 0x000004
+__title__ = 'qartez.__init__'
+__version__ = '0.5'
+__build__ = 0x000005
 __author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
 __all__ = ('ImagesSitemap', 'StaticSitemap', 'RelAlternateHreflangSitemap',)
 
 import datetime
+
+from six import PY2, PY3
 
 from django.contrib.sitemaps import Sitemap, GenericSitemap
 from django.core.urlresolvers import reverse_lazy
@@ -46,8 +48,13 @@ class ImagesSitemap(GenericSitemap):
         self.image_location_field = info_dict.get('image_location_field', None)
         self.image_caption_field = info_dict.get('image_caption_field', None)
         self.image_title_field = info_dict.get('image_title_field', None)
+
         if self.image_title_field:
-            self.image_title_field = unicode(self.image_title_field)
+            if PY2:
+                self.image_title_field = unicode(self.image_title_field)
+            else:
+                self.image_title_field = str(self.image_title_field)
+
         self.image_geo_location_field = info_dict.get('image_geo_location_field', None)
         self.image_license_field = info_dict.get('image_license_field', None)
         self.location_field = info_dict.get('location_field', None)
@@ -65,7 +72,7 @@ class ImagesSitemap(GenericSitemap):
                     return image_location_field()
                 else:
                     return image_location_field
-            except Exception, e:
+            except Exception as e:
                 return None
 
         return None
@@ -113,7 +120,7 @@ class ImagesSitemap(GenericSitemap):
                     return location_field()
                 else:
                     return location_field
-            except Exception, e:
+            except Exception as e:
                 return None
         return item.get_absolute_url()
 
@@ -149,13 +156,19 @@ class ImagesSitemap(GenericSitemap):
         for item in self.paginator.page(page).object_list:
             loc = self.__get('location', item, None)
             if loc and PREPEND_LOC_URL_WITH_SITE_URL:
-                loc = "%s://%s%s" % (protocol, unicode(domain), unicode(loc))
+                if PY2:
+                    loc = "%s://%s%s" % (protocol, unicode(domain), unicode(loc))
+                else:
+                    loc = "%s://%s%s" % (protocol, str(domain), str(loc))
 
             image_loc = self.__get('image_location', item, None)
             if image_loc and PREPEND_IMAGE_LOC_URL_WITH_SITE_URL:
                 try:
-                    image_loc = "%s://%s%s" % (protocol, unicode(domain), unicode(image_loc))
-                except Exception, e:
+                    if PY2:
+                        image_loc = "%s://%s%s" % (protocol, unicode(domain), unicode(image_loc))
+                    else:
+                        image_loc = "%s://%s%s" % (protocol, str(domain), str(image_loc))
+                except Exception as e:
                     continue
 
             # Validating the changefreq
@@ -209,17 +222,17 @@ class StaticSitemap(Sitemap):
         :param str changefreq:
         :param datetime.datetime|str lastmod:
         """
-        if kwargs.has_key('priority'):
+        if 'priority' in kwargs:
             self.priority = kwargs.pop('priority')
         else:
             self.priority = 1.0
 
-        if kwargs.has_key('changefreq'):
+        if 'changefreq' in kwargs:
             self.changefreq = kwargs.pop('changefreq')
         else:
             self.changefreq = 'never'
 
-        if kwargs.has_key('lastmod'):
+        if 'lastmod' in kwargs:
             self.lastmod = kwargs.pop('lastmod')
         else:
             self.lastmod = datetime.datetime.now()
@@ -259,7 +272,7 @@ class StaticSitemap(Sitemap):
                 'changefreq': changefreq if changefreq else self.changefreq,
                 'priority': priority if priority else self.priority
                 })
-        except Exception, e:
+        except Exception as e:
             pass
 
     def add_url(self, url, lastmod=None, changefreq=None, priority=None):
@@ -278,7 +291,7 @@ class StaticSitemap(Sitemap):
                 'changefreq': changefreq if changefreq else self.changefreq,
                 'priority': priority if priority else self.priority
                 })
-        except Exception, e:
+        except Exception as e:
             pass
 
     def get_urls(self, *args, **kwargs):
@@ -289,7 +302,7 @@ class StaticSitemap(Sitemap):
         """
         try:
             return super(StaticSitemap, self).get_urls(*args, **kwargs)
-        except Exception, e:
+        except Exception as e:
             return []
 
 

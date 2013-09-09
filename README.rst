@@ -12,17 +12,26 @@ implemented:
 - qartez.RelAlternateHreflangSitemap: Sitemaps: rel="alternate" hreflang="x" implementation. Read the specs
   the specs here http://support.google.com/webmasters/bin/answer.py?hl=en&answer=2620865
 
+Prerequisites
+======================================================
+- Django 1.5.+
+- Python 2.7.+, 3.3.+
+
 Installation
 ======================================================
 1. Install
 ------------------------------------------------------
-Latest stable version on pypi:
+Latest stable version on PyPI:
 
     $ pip install django-qartez
 
-Latest stable version from source:
+Latest stable version from bitbucket:
 
     $ pip install -e hg+http://bitbucket.org/barseghyanartur/django-qartez@stable#egg=django-qartez
+
+Latest stable version from github:
+
+    $ pip install -e git+https://github.com/barseghyanartur/django-qartez@stable#egg=django-qartez
 
 2. Add `qartez` to your ``INSTALLED_APPS``
 ------------------------------------------------------
