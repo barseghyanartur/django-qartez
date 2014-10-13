@@ -1,0 +1,7 @@
+Django==1.5.2
+Pillow==2.1.0
+argparse==1.2.1
+django-qartez==0.5
+radar==0.2
+six==1.4.1
+wsgiref==0.1.2

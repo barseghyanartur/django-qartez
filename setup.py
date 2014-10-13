@@ -9,7 +9,7 @@ except:
 template_dir = "src/qartez/templates/qartez"
 templates = [os.path.join(template_dir, f) for f in os.listdir(template_dir)]
 
-version = '0.5'
+version = '0.6'
 
 setup(
     name = 'django-qartez',

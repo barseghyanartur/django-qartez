@@ -1,7 +1,9 @@
 import random
 
-from six import print_, PY2, PY3
+from six import print_, PY3
 from six.moves import range
+
+PY2 = not PY3
 
 if PY2:
     from string import translate, maketrans, punctuation

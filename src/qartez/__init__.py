@@ -1,12 +1,12 @@
 __title__ = 'qartez.__init__'
-__version__ = '0.5'
-__build__ = 0x000005
+__version__ = '0.6'
+__build__ = 0x000006
 __author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
 __all__ = ('ImagesSitemap', 'StaticSitemap', 'RelAlternateHreflangSitemap',)
 
 import datetime
 
-from six import PY2, PY3
+from six import PY3
 
 from django.contrib.sitemaps import Sitemap, GenericSitemap
 from django.core.urlresolvers import reverse_lazy
@@ -17,6 +17,7 @@ from django.core.exceptions import ImproperlyConfigured
 from qartez.constants import REL_ALTERNATE_HREFLANG_SITEMAP_TEMPLATE
 from qartez.settings import PREPEND_LOC_URL_WITH_SITE_URL, PREPEND_IMAGE_LOC_URL_WITH_SITE_URL
 
+PY2 = not PY3
 
 class ImagesSitemap(GenericSitemap):
     """

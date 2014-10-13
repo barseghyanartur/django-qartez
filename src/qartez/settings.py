@@ -10,8 +10,6 @@ When it comes to importing the values, import them from ``qartez.settings`` modu
 ``CHANGEFREQ``: Valid changefreq values according to the specs http://www.sitemaps.org/protocol.html
 """
 __title__ = 'qartez'
-__version__ = '0.5'
-__build__ = 0x000005
 __author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
 __all__ = ('PREPEND_LOC_URL_WITH_SITE_URL', 'PREPEND_IMAGE_LOC_URL_WITH_SITE_URL', 'CHANGEFREQ', 'DEBUG')
 
