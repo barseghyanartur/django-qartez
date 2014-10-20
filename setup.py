@@ -39,7 +39,9 @@ setup(
     package_data = {'qartez': templates},
     include_package_data = True,
     install_requires = [
-        'six==1.4.1',
-        'radar==0.2',
+        'six>=1.1.0',
+    ],
+    tests_require = [
+        'radar>=0.3',
     ]
 )

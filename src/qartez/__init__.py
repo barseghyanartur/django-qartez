@@ -1,4 +1,4 @@
-__title__ = 'qartez.__init__'
+__title__ = 'django-qartez'
 __version__ = '0.6'
 __build__ = 0x000006
 __author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
@@ -15,7 +15,9 @@ from django.contrib.sites.models import Site
 from django.core.exceptions import ImproperlyConfigured
 
 from qartez.constants import REL_ALTERNATE_HREFLANG_SITEMAP_TEMPLATE
-from qartez.settings import PREPEND_LOC_URL_WITH_SITE_URL, PREPEND_IMAGE_LOC_URL_WITH_SITE_URL
+from qartez.settings import (
+    PREPEND_LOC_URL_WITH_SITE_URL, PREPEND_IMAGE_LOC_URL_WITH_SITE_URL
+    )
 
 PY2 = not PY3
 
@@ -28,14 +30,16 @@ class ImagesSitemap(GenericSitemap):
     >>> from qartez import ImagesSitemap
     >>>
     >>> foo_item_images_info_dict = {
-    >>>     'queryset': FooItem._default_manager.exclude(image=None), # Queryset
-    >>>     'image_location_field': 'image', # Image location
-    >>>     'image_title_field': 'title', # Image title
-    >>>     'location_field': 'get_absolute_url' # An absolute URL of the page where image is shown
+    >>>     'queryset': FooItem._default_manager.exclude(image=None), # queryset
+    >>>     'image_location_field': 'image', # image location
+    >>>     'image_title_field': 'title', # image title
+    >>>     'location_field': 'get_absolute_url' # an absolute URL of the page
+    >>>                                          # where image is shown
     >>> }
     >>>
     >>> foo_item_images_sitemap = {
-    >>>     'foo_item_images': ImagesSitemap(foo_item_images_info_dict, priority=0.6),
+    >>>     'foo_item_images': ImagesSitemap(foo_item_images_info_dict, \
+    >>>                                      priority=0.6),
     >>> }
     """
     def __init__(self, info_dict, priority=None, changefreq=None):
@@ -56,7 +60,9 @@ class ImagesSitemap(GenericSitemap):
             else:
                 self.image_title_field = str(self.image_title_field)
 
-        self.image_geo_location_field = info_dict.get('image_geo_location_field', None)
+        self.image_geo_location_field = info_dict.get(
+            'image_geo_location_field', None
+            )
         self.image_license_field = info_dict.get('image_license_field', None)
         self.location_field = info_dict.get('location_field', None)
         super(ImagesSitemap, self).__init__(info_dict, priority, changefreq)
@@ -149,8 +155,10 @@ class ImagesSitemap(GenericSitemap):
                 except Site.DoesNotExist:
                     pass
             if site is None:
-                raise ImproperlyConfigured("To use sitemaps, either enable the sites framework or pass a "
-                                           "Site/RequestSite object in your view.")
+                raise ImproperlyConfigured(
+                    "To use sitemaps, either enable the sites framework or "
+                    "pass a Site/RequestSite object in your view."
+                    )
         domain = site.domain
 
         urls = []
@@ -158,17 +166,23 @@ class ImagesSitemap(GenericSitemap):
             loc = self.__get('location', item, None)
             if loc and PREPEND_LOC_URL_WITH_SITE_URL:
                 if PY2:
-                    loc = "%s://%s%s" % (protocol, unicode(domain), unicode(loc))
+                    loc = "{0}://{1}{2}".format(
+                        protocol, unicode(domain), unicode(loc)
+                        )
                 else:
-                    loc = "%s://%s%s" % (protocol, str(domain), str(loc))
+                    loc = "{0}://{1}{2}".format(protocol, str(domain), str(loc))
 
             image_loc = self.__get('image_location', item, None)
             if image_loc and PREPEND_IMAGE_LOC_URL_WITH_SITE_URL:
                 try:
                     if PY2:
-                        image_loc = "%s://%s%s" % (protocol, unicode(domain), unicode(image_loc))
+                        image_loc = "{0}://{1}{2}".format(
+                            protocol, unicode(domain), unicode(image_loc)
+                            )
                     else:
-                        image_loc = "%s://%s%s" % (protocol, str(domain), str(image_loc))
+                        image_loc = "{0}://{1}{2}".format(
+                            protocol, str(domain), str(image_loc)
+                            )
                 except Exception as e:
                     continue
 
@@ -188,7 +202,9 @@ class ImagesSitemap(GenericSitemap):
                 'image_caption': self.__get('image_caption', item, None),
                 'image_title': self.__get('image_title', item, None),
                 'image_license': self.__get('image_license', item, None),
-                'image_geo_location': self.__get('image_geo_location', item, None),
+                'image_geo_location': self.__get(
+                    'image_geo_location', item, None
+                    ),
                 'lastmod': self.__get('lastmod', item, None),
                 'changefreq': changefreq,
                 'priority': priority
@@ -199,7 +215,8 @@ class ImagesSitemap(GenericSitemap):
 
 class StaticSitemap(Sitemap):
     """
-    Sitemap for ``static`` pages. See constructor docstring for list of accepted (additional) arguments.
+    Sitemap for ``static`` pages. See constructor docstring for list of
+    accepted (additional) arguments.
 
     :example:
     >>> from qartez import StaticSitemap
@@ -209,15 +226,20 @@ class StaticSitemap(Sitemap):
     >>>
     >>> content_types_sitemap = StaticSitemap(priority=1.0, changefreq='daily')
     >>> content_types_sitemap.add_named_pattern('blog.browse') # Homepage
-    >>> content_types_sitemap.add_named_pattern('blog.browse', kwargs={'content_type': 'articles'}) # Articles
-    >>> content_types_sitemap.add_named_pattern('blog.browse', kwargs={'content_type': 'downloads'}) # Downloads
+    >>> content_types_sitemap.add_named_pattern(
+    >>>     'blog.browse', kwargs={'content_type': 'articles'}
+    >>>     ) # Articles
+    >>> content_types_sitemap.add_named_pattern(
+    >>>     'blog.browse', kwargs={'content_type': 'downloads'}
+    >>>     ) # Downloads
     """
     NAMED_PATTERN = 1
     URL = 2
 
     def __init__(self, *args, **kwargs):
         """
-        Constructor. Accepts the following optional keyword-arguments (to be only specified as keyword-arguments).
+        Constructor. Accepts the following optional keyword-arguments (to
+        be only specified as keyword-arguments).
 
         :param float priority:
         :param str changefreq:
@@ -252,8 +274,8 @@ class StaticSitemap(Sitemap):
     def location(self, obj):
         return obj['location']
 
-    def add_named_pattern(self, viewname, urlconf=None, args=[], kwargs=None, lastmod=None, changefreq=None, \
-                          priority=None):
+    def add_named_pattern(self, viewname, urlconf=None, args=[], kwargs=None, \
+                          lastmod=None, changefreq=None, priority=None):
         """
         Ads a named pattern to the items list.
 
@@ -311,9 +333,11 @@ class RelAlternateHreflangSitemap(Sitemap):
     """
     Sitemaps: rel="alternate" hreflang="x" implementation.
     
-    Read the specs the specs here http://support.google.com/webmasters/bin/answer.py?hl=en&answer=2620865
+    Read the specs the specs here
+    http://support.google.com/webmasters/bin/answer.py?hl=en&answer=2620865
 
-    IMPORTANT: When you use this class you have to override the ``alternate_hreflangs`` method in your sitemap class.
+    IMPORTANT: When you use this class you have to override
+    the ``alternate_hreflangs`` method in your sitemap class.
 
     :example:
     >>> from qartez import RelAlternateHreflangSitemap
@@ -333,24 +357,29 @@ class RelAlternateHreflangSitemap(Sitemap):
 
     def alternate_hreflangs(self, item):
         """
-        You should override the "alternate_hreflangs" method in your sitemap class.
+        You should override the "alternate_hreflangs" method in your sitemap
+        class.
         """
         raise NotImplementedError(
-            u"""You have to override the "alternate_hreflangs" method in your sitemap class. """
-            u"""Refer to "qartez" app documentation for details and examples."""
+            """You have to override the "alternate_hreflangs" method in """
+            """your sitemap class. Refer to "qartez" app documentation for """
+            """details and examples."""
             )
 
     def _render_alternate_hreflangs(self, item):
         """
-        Renders the tiny bit of XML responsible for rendering the alternate hreflang code.
+        Renders the tiny bit of XML responsible for rendering the alternate
+        hreflang code.
 
         :return str:
         """
         alternate_hreflangs = self.__get('alternate_hreflangs', item, [])
-        output = u""
+        output = ""
         if alternate_hreflangs:
             for hreflang in alternate_hreflangs:
-                output += REL_ALTERNATE_HREFLANG_SITEMAP_TEMPLATE % {'lang': hreflang[0], 'href': hreflang[1]}
+                output += REL_ALTERNATE_HREFLANG_SITEMAP_TEMPLATE.format(
+                    **{'lang': hreflang[0], 'href': hreflang[1]}
+                    )
         return output
 
     def get_urls(self, page=1, site=None, protocol=None):
@@ -368,13 +397,17 @@ class RelAlternateHreflangSitemap(Sitemap):
                 except Site.DoesNotExist:
                     pass
             if site is None:
-                raise ImproperlyConfigured("To use sitemaps, either enable the sites framework or pass a "
-                                           "Site/RequestSite object in your view.")
+                raise ImproperlyConfigured(
+                    "To use sitemaps, either enable the sites framework "
+                    "or pass a Site/RequestSite object in your view."
+                    )
         domain = site.domain
 
         urls = []
         for item in self.paginator.page(page).object_list:
-            loc = "%s://%s%s" % (protocol, domain, self.__get('location', item))
+            loc = "{0}://{1}{2}".format(
+                protocol, domain, self.__get('location', item)
+                )
             url_info = {
                 'location': loc,
                 'lastmod': self.__get('lastmod', item, None),

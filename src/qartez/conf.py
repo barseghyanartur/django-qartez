@@ -1,4 +1,4 @@
-__title__ = 'qartez'
+__title__ = 'qartez.conf'
 __author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
 __all__ = ('get_setting',)
 
@@ -14,7 +14,7 @@ def get_setting(setting, override=None):
     """
     if override is not None:
         return override
-    if hasattr(settings, 'QARTEZ_%s' % setting):
-        return getattr(settings, 'QARTEZ_%s' % setting)
+    if hasattr(settings, 'QARTEZ_{0}'.format(setting)):
+        return getattr(settings, 'QARTEZ_{0}'.format(setting))
     else:
         return getattr(defaults, setting)

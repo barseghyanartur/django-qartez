@@ -7,7 +7,8 @@ from django.template import loader
 from django.utils.encoding import smart_str
 from django.core.paginator import EmptyPage, PageNotAnInteger
 
-def render_images_sitemap(request, sitemaps, section=None, template_name='qartez/images_sitemap.xml'):
+def render_images_sitemap(request, sitemaps, section=None, \
+                          template_name='qartez/images_sitemap.xml'):
     """
     Renders images sitemap.
 
@@ -20,7 +21,9 @@ def render_images_sitemap(request, sitemaps, section=None, template_name='qartez
     maps, urls = [], []
     if section is not None:
         if section not in sitemaps:
-            raise Http404("No sitemap available for section: %r" % section)
+            raise Http404(
+                "No sitemap available for section: {0}".format(section)
+                )
         maps.append(sitemaps[section])
     else:
         maps = sitemaps.values()
@@ -32,8 +35,13 @@ def render_images_sitemap(request, sitemaps, section=None, template_name='qartez
             else:
                 urls.extend(site.get_urls(page))
         except EmptyPage:
-            raise Http404("Page %s empty" % page)
+            raise Http404("Page {0} empty".format(page))
         except PageNotAnInteger:
-            raise Http404("No page '%s'" % page)
-    xml = smart_str(loader.render_to_string(template_name, {'urlset': urls, 'request': request}))
-    return HttpResponse(xml, mimetype='application/xml')
+            raise Http404("No page {0}".format(page))
+    xml = smart_str(loader.render_to_string(
+        template_name, {'urlset': urls, 'request': request})
+        )
+    try:
+        return HttpResponse(xml, mimetype='application/xml')
+    except TypeError:
+        return HttpResponse(xml, content_type='application/xml')

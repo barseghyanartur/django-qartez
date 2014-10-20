@@ -1,4 +1,4 @@
-__title__ = 'qartez'
+__title__ = 'qartez.constants'
 __author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
 __all__ = ('REL_ALTERNATE_HREFLANG_SITEMAP_TEMPLATE',)
 
@@ -6,7 +6,7 @@ __all__ = ('REL_ALTERNATE_HREFLANG_SITEMAP_TEMPLATE',)
 REL_ALTERNATE_HREFLANG_SITEMAP_TEMPLATE = """
 <xhtml:link
     rel="alternate"
-    hreflang="%(lang)s"
-    href="%(href)s"
+    hreflang="{lang}"
+    href="{href}"
     />
 """

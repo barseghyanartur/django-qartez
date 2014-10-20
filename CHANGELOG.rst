@@ -5,6 +5,7 @@ Release history
 2014-10-12
 
 - Django 1.7 support.
+- Softened `six` requirements.
 
 0.5
 -------------------------------------
