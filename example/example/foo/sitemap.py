@@ -2,7 +2,7 @@ __all__ = ('foo_item_images_sitemap', 'foo_static_sitemap', 'FooItemSitemap')
 
 from django.contrib.sitemaps import Sitemap
 
-from qartez import ImagesSitemap, StaticSitemap, RelAlternateHreflangSitemap
+from qartez.sitemaps import ImagesSitemap, StaticSitemap, RelAlternateHreflangSitemap
 
 from foo.models import FooItem
 
