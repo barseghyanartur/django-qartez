@@ -14,7 +14,7 @@ implemented:
 
 Prerequisites
 ======================================================
-- Django: 1.5, 1.6, 1.7
+- Django: 1.5, 1.6, 1.7, 1.8, 1.9
 - Python: 2.7, 3.3
 
 Installation
