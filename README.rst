@@ -150,6 +150,8 @@ Note, that it's necessary to add the
 'template_name': 'qartez/rel_alternate_hreflang_sitemap.xml'
 only in case if you are going to use the ``qartez.RelAlternateHreflangSitemap``.
 
+.. code-block:: python
+
     (
         r'^sitemap-(?P<section>.+)\.xml$',
         'django.contrib.sitemaps.views.sitemap',
