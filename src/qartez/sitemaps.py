@@ -3,6 +3,7 @@ __author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
 __all__ = ('ImagesSitemap', 'StaticSitemap', 'RelAlternateHreflangSitemap',)
 
 import datetime
+import urlparse
 
 from six import PY3
 
@@ -365,8 +366,11 @@ class RelAlternateHreflangSitemap(Sitemap):
             """your sitemap class. Refer to "qartez" app documentation for """
             """details and examples."""
         )
+        
+    def _full_url(self, protocol, domain, path):
+        return "{0}://{1}{2}".format(protocol, domain, path)
 
-    def _render_alternate_hreflangs(self, item):
+    def _render_alternate_hreflangs(self, protocol, domain, item):
         """
         Renders the tiny bit of XML responsible for rendering the alternate
         hreflang code.
@@ -376,9 +380,13 @@ class RelAlternateHreflangSitemap(Sitemap):
         alternate_hreflangs = self.__get('alternate_hreflangs', item, [])
         output = ""
         if alternate_hreflangs:
-            for hreflang in alternate_hreflangs:
+            for lang, path in alternate_hreflangs:
+                if urlparse.urlparse(path).netloc:
+                    url = path
+                else:
+                    url = self._full_url(protocol, domain, path)
                 output += REL_ALTERNATE_HREFLANG_SITEMAP_TEMPLATE.format(
-                    **{'lang': hreflang[0], 'href': hreflang[1]}
+                    **{'lang': lang, 'href': url}
                 )
         return output
 
@@ -405,15 +413,13 @@ class RelAlternateHreflangSitemap(Sitemap):
 
         urls = []
         for item in self.paginator.page(page).object_list:
-            loc = "{0}://{1}{2}".format(
-                protocol, domain, self.__get('location', item)
-            )
+            loc = self._full_url(protocol, domain, self.__get('location', item))
             url_info = {
                 'location': loc,
                 'lastmod': self.__get('lastmod', item, None),
                 'changefreq': self.__get('changefreq', item, None),
                 'priority': self.__get('priority', item, None),
-                'alternate_hreflangs': self._render_alternate_hreflangs(item),
+                'alternate_hreflangs': self._render_alternate_hreflangs(protocol, domain, item),
             }
 
             urls.append(url_info)
