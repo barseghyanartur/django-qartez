@@ -13,7 +13,7 @@ from django.core.exceptions import ImproperlyConfigured
 
 from qartez.constants import REL_ALTERNATE_HREFLANG_SITEMAP_TEMPLATE
 from qartez.settings import (
-    PREPEND_LOC_URL_WITH_SITE_URL, PREPEND_IMAGE_LOC_URL_WITH_SITE_URL
+    PREPEND_LOC_URL_WITH_SITE_URL, PREPEND_IMAGE_LOC_URL_WITH_SITE_URL, CHANGEFREQ
 )
 
 PY2 = not PY3
