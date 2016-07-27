@@ -1,16 +1,16 @@
-__title__ = 'qartez.views'
-__author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
-__all__ = ('render_images_sitemap',)
-
 from django.http import HttpResponse, Http404
 from django.template import loader
 from django.utils.encoding import smart_str
 from django.core.paginator import EmptyPage, PageNotAnInteger
 
-def render_images_sitemap(request, sitemaps, section=None, \
+__title__ = 'qartez.views'
+__author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
+__all__ = ('render_images_sitemap',)
+
+
+def render_images_sitemap(request, sitemaps, section=None,
                           template_name='qartez/images_sitemap.xml'):
-    """
-    Renders images sitemap.
+    """Render images sitemap.
 
     :param django.http.HttpRequest request:
     :param sitemaps:

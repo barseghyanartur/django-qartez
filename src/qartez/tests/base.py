@@ -1,16 +1,15 @@
 from __future__ import print_function
 
+PRINT_INFO = True
+
 __title__ = 'qartez.tests.base'
 __author__ = 'Artur Barseghyan'
 __copyright__ = 'Copyright (c) 2013-2014 Artur Barseghyan'
 __license__ = 'GPL 2.0/LGPL 2.1'
 
-PRINT_INFO = True
 
 def print_info(func):
-    """
-    Prints some useful info.
-    """
+    """Print some useful info."""
     if not PRINT_INFO:
         return func
 

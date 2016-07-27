@@ -1,15 +1,21 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
-urlpatterns = patterns('foo.views',
+from foo import views
+
+urlpatterns = [
     # Foo items listing URL
-    url(r'^$', view='browse', name='foo.browse'),
+    url(r'^$', view=views.browse, name='foo.browse'),
 
     # Contact URL
-    url(r'^contact/$', view='contact', name='foo.contact'),
+    url(r'^contact/$', view=views.contact, name='foo.contact'),
 
     # Welcome URL
-    url(r'^welcome/$', view='welcome', name='foo.welcome'),
+    url(r'^welcome/$', view=views.welcome, name='foo.welcome'),
 
     # Foo item detail URL
-    url(r'^(?P<slug>[\w\-\_\.\,]+)/$', view='detail', name='foo.detail'),
-)
+    url(
+        r'^(?P<slug>[\w\-\_\.\,]+)/$',
+        view=views.detail,
+        name='foo.detail'
+    ),
+]

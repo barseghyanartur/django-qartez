@@ -1,0 +1,3 @@
+-r common.txt
+Django>=1.8<1.9
+django-debug-toolbar

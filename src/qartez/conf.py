@@ -1,10 +1,11 @@
+from django.conf import settings
+
+from . import defaults
+
 __title__ = 'qartez.conf'
 __author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
 __all__ = ('get_setting',)
 
-from django.conf import settings
-
-from qartez import defaults
 
 def get_setting(setting, override=None):
     """

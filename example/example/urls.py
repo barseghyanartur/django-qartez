@@ -1,12 +1,19 @@
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 
 from django.conf import settings
 from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
+from django.contrib.sitemaps.views import index as sitemaps_index
+from django.contrib.sitemaps.views import sitemap as sitemaps_sitemap
+from qartez.views import render_images_sitemap
 
-from foo.sitemap import foo_item_images_sitemap, foo_static_sitemap, FooItemSitemap, FooItemAlternateHreflangSitemap, \
-    FooImagesSitemap
+from foo.sitemap import (
+    foo_item_images_sitemap, foo_static_sitemap, FooItemSitemap,
+    FooItemAlternateHreflangSitemap, FooImagesSitemap
+)
+
+from foo import urls as foo_urls
 
 sitemaps = {
     'foo-items': FooItemSitemap,
@@ -17,9 +24,9 @@ sitemaps = {
 
 admin.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = [
     # Foo URLs
-    (r'^foo/', include('foo.urls')),
+    url(r'^foo/', include(foo_urls)),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
@@ -28,14 +35,29 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     # Sitemaps
-    (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.index', {'sitemaps': sitemaps}),
-    (r'^sitemap-foo-images\.xml$', 'qartez.views.render_images_sitemap', {'sitemaps': foo_item_images_sitemap}),
+    url(
+        r'^sitemap\.xml$',
+        sitemaps_index,
+        {'sitemaps': sitemaps}
+    ),
+    url(
+        r'^sitemap-foo-images\.xml$',
+        render_images_sitemap,
+        {'sitemaps': foo_item_images_sitemap}
+    ),
 
-    # Note, that it's necessary to add the 'template_name': 'qartez/rel_alternate_hreflang_sitemap.xml' only in case
+    # Note, that it's necessary to add the
+    # 'template_name': 'qartez/rel_alternate_hreflang_sitemap.xml' only in case
     # if you are going to use the ``qartez.RelAlternateHreflangSitemap``.
-    (r'^sitemap-(?P<section>.+)\.xml$', 'django.contrib.sitemaps.views.sitemap',
-     {'sitemaps': sitemaps, 'template_name': 'qartez/rel_alternate_hreflang_sitemap.xml'}),
-)
+    url(
+        r'^sitemap-(?P<section>.+)\.xml$',
+        sitemaps_sitemap,
+        {
+            'sitemaps': sitemaps,
+            'template_name': 'qartez/rel_alternate_hreflang_sitemap.xml'
+        }
+    ),
+]
 
 if settings.DEBUG:
     urlpatterns += staticfiles_urlpatterns()

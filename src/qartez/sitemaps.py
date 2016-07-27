@@ -1,7 +1,3 @@
-__title__ = 'django-qartez'
-__author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
-__all__ = ('ImagesSitemap', 'StaticSitemap', 'RelAlternateHreflangSitemap',)
-
 import datetime
 import urlparse
 
@@ -12,12 +8,17 @@ from django.core.urlresolvers import reverse_lazy
 from django.contrib.sites.models import Site
 from django.core.exceptions import ImproperlyConfigured
 
-from qartez.constants import REL_ALTERNATE_HREFLANG_SITEMAP_TEMPLATE
-from qartez.settings import (
-    PREPEND_LOC_URL_WITH_SITE_URL, PREPEND_IMAGE_LOC_URL_WITH_SITE_URL, CHANGEFREQ
+from .constants import REL_ALTERNATE_HREFLANG_SITEMAP_TEMPLATE
+from .settings import (
+    PREPEND_LOC_URL_WITH_SITE_URL, PREPEND_IMAGE_LOC_URL_WITH_SITE_URL,
+    CHANGEFREQ
 )
 
 PY2 = not PY3
+
+__title__ = 'django-qartez'
+__author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
+__all__ = ('ImagesSitemap', 'StaticSitemap', 'RelAlternateHreflangSitemap',)
 
 
 class ImagesSitemap(GenericSitemap):
@@ -43,8 +44,7 @@ class ImagesSitemap(GenericSitemap):
     """
 
     def __init__(self, info_dict, priority=None, changefreq=None):
-        """
-        Constructor.
+        """Constructor.
 
         :param dict info_dict:
         :param priority float:
@@ -68,9 +68,7 @@ class ImagesSitemap(GenericSitemap):
         super(ImagesSitemap, self).__init__(info_dict, priority, changefreq)
 
     def image_location(self, item):
-        """
-        Gets image location.
-        """
+        """Get image location."""
         if self.image_location_field is not None:
             try:
                 image_location_field = getattr(item, self.image_location_field)
@@ -85,33 +83,25 @@ class ImagesSitemap(GenericSitemap):
         return None
 
     def image_caption(self, item):
-        """
-        Gets image caption.
-        """
+        """Get image caption."""
         if self.image_caption_field is not None:
             return getattr(item, self.image_caption_field)
         return None
 
     def image_title(self, item):
-        """
-        Gets image title.
-        """
+        """Get image title."""
         if self.image_title_field is not None:
             return getattr(item, self.image_title_field)
         return None
 
     def image_geo_location(self, item):
-        """
-        Gets image geo location.
-        """
+        """Get image geo location."""
         if self.image_geo_location_field is not None:
             return getattr(item, self.image_geo_location_field)
         return None
 
     def image_license(self, item):
-        """
-        Gets image geo location.
-        """
+        """Get image geo location."""
         if self.image_license_field is not None:
             return getattr(item, self.image_license_field)
         return None
@@ -132,6 +122,7 @@ class ImagesSitemap(GenericSitemap):
         return item.get_absolute_url()
 
     def __get(self, name, obj, default=None):
+        """Get method."""
         try:
             attr = getattr(self, name)
         except AttributeError:
@@ -141,6 +132,7 @@ class ImagesSitemap(GenericSitemap):
         return attr
 
     def get_urls(self, page=1, site=None, protocol=None):
+        """Get URLs."""
         # Determine protocol
         if self.protocol is not None:
             protocol = self.protocol
@@ -214,9 +206,9 @@ class ImagesSitemap(GenericSitemap):
 
 
 class StaticSitemap(Sitemap):
-    """
-    Sitemap for ``static`` pages. See constructor docstring for list of
-    accepted (additional) arguments.
+    """Sitemap for ``static`` pages.
+
+    See constructor docstring for list of accepted (additional) arguments.
 
     :example:
     >>> from qartez.sitemaps import StaticSitemap
@@ -237,8 +229,7 @@ class StaticSitemap(Sitemap):
     URL = 2
 
     def __init__(self, *args, **kwargs):
-        """
-        Constructor. Accepts the following optional keyword-arguments (to
+        """Constructor. Accepts the following optional keyword-arguments (to
         be only specified as keyword-arguments).
 
         :param float priority:
@@ -264,20 +255,19 @@ class StaticSitemap(Sitemap):
         self._items = []
 
     def items(self):
-        """
-        Returns sitemap items.
+        """Return sitemap items.
 
         :return list:
         """
         return self._items
 
     def location(self, obj):
+        """Location."""
         return obj['location']
 
     def add_named_pattern(self, viewname, urlconf=None, args=[], kwargs=None, \
                           lastmod=None, changefreq=None, priority=None):
-        """
-        Ads a named pattern to the items list.
+        """Ad a named pattern to the items list.
 
         :param str viewname:
         :param urlconf:
@@ -299,8 +289,7 @@ class StaticSitemap(Sitemap):
             pass
 
     def add_url(self, url, lastmod=None, changefreq=None, priority=None):
-        """
-        Adds a URL to the items list.
+        """Add a URL to the items list.
 
         :param str url:
         :param lastmod:
@@ -318,8 +307,7 @@ class StaticSitemap(Sitemap):
             pass
 
     def get_urls(self, *args, **kwargs):
-        """
-        Make sure nothing breaks if some URL is unresolvable.
+        """Make sure nothing breaks if some URL is unresolvable.
 
         :return list:
         """
@@ -330,8 +318,7 @@ class StaticSitemap(Sitemap):
 
 
 class RelAlternateHreflangSitemap(Sitemap):
-    """
-    Sitemaps: rel="alternate" hreflang="x" implementation.
+    """Sitemaps: rel="alternate" hreflang="x" implementation.
 
     Read the specs the specs here
     http://support.google.com/webmasters/bin/answer.py?hl=en&answer=2620865
@@ -348,6 +335,7 @@ class RelAlternateHreflangSitemap(Sitemap):
     """
 
     def __get(self, name, obj, default=None):
+        """Get."""
         try:
             attr = getattr(self, name)
         except AttributeError:
@@ -357,7 +345,8 @@ class RelAlternateHreflangSitemap(Sitemap):
         return attr
 
     def alternate_hreflangs(self, item):
-        """
+        """Alternate hreflangs.
+
         You should override the "alternate_hreflangs" method in your sitemap
         class.
         """
@@ -368,11 +357,13 @@ class RelAlternateHreflangSitemap(Sitemap):
         )
         
     def _full_url(self, protocol, domain, path):
+        """Full URL."""
         return "{0}://{1}{2}".format(protocol, domain, path)
 
     def _render_alternate_hreflangs(self, protocol, domain, item):
-        """
-        Renders the tiny bit of XML responsible for rendering the alternate
+        """Render alternative hreflangs.
+
+        Render the tiny bit of XML responsible for rendering the alternate
         hreflang code.
 
         :return str:
@@ -391,6 +382,7 @@ class RelAlternateHreflangSitemap(Sitemap):
         return output
 
     def get_urls(self, page=1, site=None, protocol=None):
+        """Get URLs."""
         # Determine protocol
         if self.protocol is not None:
             protocol = self.protocol

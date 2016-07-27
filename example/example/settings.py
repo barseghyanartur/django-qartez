@@ -138,7 +138,7 @@ INSTALLED_APPS = (
 
     'qartez',
 
-    'foo', # Our example app
+    'foo',  # Our example app
 )
 
 # django-lime conf
