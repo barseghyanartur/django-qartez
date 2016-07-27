@@ -5,12 +5,14 @@ from django.contrib import admin
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
 
-from foo.sitemap import foo_item_images_sitemap, foo_static_sitemap, FooItemSitemap, FooItemAlternateHreflangSitemap
+from foo.sitemap import foo_item_images_sitemap, foo_static_sitemap, FooItemSitemap, FooItemAlternateHreflangSitemap, \
+    FooImagesSitemap
 
 sitemaps = {
     'foo-items': FooItemSitemap,
     'foo-items-alternate-hreflang': FooItemAlternateHreflangSitemap,
-    'foo-static': foo_static_sitemap
+    'foo-static': foo_static_sitemap,
+    'foo-images-custom': FooImagesSitemap,
 }
 
 admin.autodiscover()

@@ -24,6 +24,7 @@ if os.environ.get("DJANGO_SETTINGS_MODULE", None):
                 'images sitemap': '/sitemap-foo-images.xml',
                 'static sitemap': '/sitemap-foo-static.xml',
                 'alternative hreflang sitemap': '/sitemap-foo-items-alternate-hreflang.xml',
+                'images custom sitemap' : '/sitemap-foo-images-custom.xml',
             }
 
         @print_info

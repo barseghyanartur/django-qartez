@@ -50,3 +50,16 @@ class FooItemAlternateHreflangSitemap(RelAlternateHreflangSitemap):
 
     def items(self):
         return FooItem._default_manager.exclude(alternative_url=None)
+
+class FooImagesSitemap(ImagesSitemap):
+    
+    def __init__(self):
+        super(FooImagesSitemap, self).__init__({
+            'queryset': FooItem._default_manager.exclude(image=None), # queryset
+            'image_location_field': 'image', # image location
+            'image_title_field': 'title', # image title
+            'location_field': 'get_absolute_url' # an absolute URL of the page
+                                             # where image is shown    
+        }, changefreq='weekly')
+    
+
