@@ -200,7 +200,7 @@ foo/models.py
            return self.image.url if self.image else ''
 
 foo/views.py
-------------------------------------------------------
+------------
 .. code-block:: python
 
     # Service welcome page
