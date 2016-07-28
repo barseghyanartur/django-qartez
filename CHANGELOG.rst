@@ -1,7 +1,7 @@
 Release history
 ===============
-0.7
----
+0.7 (not released yet)
+----------------------
 2016-07-28
 
 - Django 1.8 and 1.9 support.
