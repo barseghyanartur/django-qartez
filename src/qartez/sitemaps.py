@@ -1,5 +1,5 @@
 import datetime
-import urlparse
+import urllib.parse as urlparse
 
 from six import PY3
 
