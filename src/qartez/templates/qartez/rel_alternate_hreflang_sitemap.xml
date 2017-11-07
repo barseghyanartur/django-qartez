@@ -1,8 +1,6 @@
-<?xml version="1.0" encoding="UTF-8"?>
-{% load l10n %}
+<?xml version="1.0" encoding="UTF-8"?>{% load l10n %}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-{% spaceless %}
-{% for url in urlset %}
+{% for url in urlset %}{% spaceless %}
     <url>
         <loc>{{ url.location }}</loc>
         {% if url.lastmod %}<lastmod>{{ url.lastmod|date:"Y-m-d" }}</lastmod>{% endif %}
@@ -10,6 +8,5 @@
         {% if url.priority %}<priority>{{ url.priority|unlocalize }}</priority>{% endif %}
         {% if url.alternate_hreflangs %}{{ url.alternate_hreflangs|safe }}{% endif %}
     </url>
-{% endfor %}
 {% endspaceless %}
-</urlset>
+{% endfor %}</urlset>
