@@ -5,7 +5,7 @@ This app aims to provide the missing XML sitemapsf for Django. At the moment
 the following XML sitemaps are implemented:
 
 - `qartez.sitemaps.ImagesSitemap`: XML images sitemaps according to the `specs
-  <http://www.google.com/support/webmasters/bin/answer.py?answer=178636>`_.
+  <http://www.google.com/support/webmasters/bin/answer.py?answer=178636>`__.
 
 - `qartez.sitemaps.StaticSitemap`: Sitemap for service pages. Add named
   patterns or URLs to the sitemap to have it nicely displayed in a separate
@@ -13,7 +13,7 @@ the following XML sitemaps are implemented:
 
 - `qartez.sitemaps.RelAlternateHreflangSitemap`: Sitemaps: rel="alternate"
   hreflang="x" implementation. Read the `specs
-  <http://support.google.com/webmasters/bin/answer.py?hl=en&answer=2620865>`_.
+  <http://support.google.com/webmasters/bin/answer.py?hl=en&answer=2620865>`__.
 
 Prerequisites
 =============
