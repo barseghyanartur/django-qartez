@@ -4,6 +4,7 @@
 .hg/
 .git/
 .hgtags
+.idea/
 
 example/db/
 example/tmp/

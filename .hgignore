@@ -4,6 +4,7 @@ syntax: regexp
 \.gitignore~
 \.git/
 
+^\.idea/
 ^example/db/
 ^example/tmp/
 ^example/static/
