@@ -1,7 +1,7 @@
 import datetime
-import urlparse
 
 from six import PY3
+from six.moves.urllib import parse as urlparse
 
 from django.contrib.sitemaps import Sitemap, GenericSitemap
 from django.core.urlresolvers import reverse_lazy
