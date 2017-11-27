@@ -14,7 +14,7 @@ version = '0.7'
 setup(
     name='django-qartez',
     version=version,
-    description=("Additional XML sitemap functionality for Django"),
+    description="Additional XML sitemap functionality for Django",
     long_description=readme,
     classifiers=[
         "Programming Language :: Python",
@@ -27,7 +27,8 @@ setup(
         "Operating System :: OS Independent",
         "Development Status :: 5 - Production/Stable",
         "License :: OSI Approved :: GNU General Public License v2 (GPLv2)",
-        "License :: OSI Approved :: GNU Lesser General Public License v2 or later (LGPLv2+)",
+        "License :: OSI Approved :: GNU Lesser General Public License v2 or "
+        "later (LGPLv2+)",
     ],
     keywords='xml sitemaps, images sitemaps, django, app, python',
     author='Artur Barseghyan',
