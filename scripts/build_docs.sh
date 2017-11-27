@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+./scripts/prepare_docs.sh
 ./scripts/uninstall.sh
 ./scripts/install.sh
 sphinx-build -n -a -b html docs builddocs

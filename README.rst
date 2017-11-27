@@ -30,17 +30,17 @@ Latest stable version on PyPI:
 
     pip install django-qartez
 
-Latest stable version from bitbucket:
+Latest stable version from BitBucket:
 
 .. code-block:: sh
 
-    pip install -e hg+http://bitbucket.org/barseghyanartur/django-qartez@stable#egg=django-qartez
+    pip install https://bitbucket.org/barseghyanartur/django-qartez/get/stable.tar.gz
 
-Latest stable version from github:
+Latest stable version from GitHub:
 
 .. code-block:: sh
 
-    pip install -e git+https://github.com/barseghyanartur/django-qartez@stable#egg=django-qartez
+    pip install https://github.com/barseghyanartur/django-qartez/archive/stable.tar.gz
 
 2. Add `qartez` to your `INSTALLED_APPS`
 ----------------------------------------
