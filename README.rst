@@ -1,8 +1,8 @@
 =============
 django-qartez
 =============
-This app aims to provide the missing XML sitemapsf for Django. At the moment the following XML sitemaps are
-implemented:
+This app aims to provide the missing XML sitemapsf for Django. At the moment
+the following XML sitemaps are implemented:
 
 - `qartez.sitemaps.ImagesSitemap`: XML images sitemaps according to the `specs
   <http://www.google.com/support/webmasters/bin/answer.py?answer=178636>`_.
@@ -17,8 +17,8 @@ implemented:
 
 Prerequisites
 =============
-- Django: 1.5, 1.6, 1.7, 1.8, 1.9
-- Python: 2.7, 3.3
+- Django: 1.8, 1.9, 1.10, 1.11
+- Python: 2.7, 3.4, 3.5, 3.6
 
 Installation
 ============
@@ -161,8 +161,8 @@ only in case if you are going to use the ``qartez.RelAlternateHreflangSitemap``.
         }
     ),
 
-In order to just get a better idea what kind of models and views are given in the example, see the code parts
-below.
+In order to just get a better idea what kind of models and views are given in
+the example, see the code parts below.
 
 foo/models.py
 -------------
@@ -235,7 +235,7 @@ GPL 2.0/LGPL 2.1
 
 Support
 =======
-For any issues contact me at the e-mail given in the `Author` section.
+For any issues contact me at the e-mail given in the `Author`_ section.
 
 Author
 ======
