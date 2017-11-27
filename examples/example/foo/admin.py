@@ -23,11 +23,12 @@ class FooItemAdmin(admin.ModelAdmin):
         }),
         (_("Additional"), {
             'classes': ('collapse',),
-            'fields': ('date_created', 'date_updated') #,
+            'fields': ('date_created', 'date_updated')
         })
     )
 
     class Meta:
         app_label = _('Foo item')
+
 
 admin.site.register(FooItem, FooItemAdmin)

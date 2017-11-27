@@ -1,16 +1,25 @@
-__all__ = ('foo_item_images_sitemap', 'foo_static_sitemap', 'FooItemSitemap')
+__all__ = (
+    'foo_item_images_sitemap',
+    'foo_static_sitemap',
+    'FooItemSitemap',
+)
 
 from django.contrib.sitemaps import Sitemap
 
-from qartez.sitemaps import ImagesSitemap, StaticSitemap, RelAlternateHreflangSitemap
+from qartez.sitemaps import (
+    ImagesSitemap,
+    StaticSitemap,
+    RelAlternateHreflangSitemap,
+)
 
 from foo.models import FooItem
 
 foo_item_images_info_dict = {
-    'queryset': FooItem._default_manager.exclude(image=None), # Queryset
-    'image_location_field': 'image_url', # Image location
-    'image_title_field': 'title', # Image title
-    'location_field': 'get_absolute_url' # An absolute URL of the page where image is shown
+    'queryset': FooItem._default_manager.exclude(image=None),  # Queryset
+    'image_location_field': 'image_url',  # Image location
+    'image_title_field': 'title',  # Image title
+    # An absolute URL of the page where image is shown
+    'location_field': 'get_absolute_url'
 }
 
 foo_item_images_sitemap = {
@@ -21,6 +30,7 @@ foo_item_images_sitemap = {
 foo_static_sitemap = StaticSitemap(priority=0.1, changefreq='never')
 foo_static_sitemap.add_named_pattern('foo.welcome')
 foo_static_sitemap.add_named_pattern('foo.contact')
+
 
 class FooItemSitemap(Sitemap):
     """
@@ -38,6 +48,7 @@ class FooItemSitemap(Sitemap):
     def items(self):
         return FooItem._default_manager.all()
 
+
 class FooItemAlternateHreflangSitemap(RelAlternateHreflangSitemap):
     """
     Alternative URL.
@@ -46,20 +57,19 @@ class FooItemAlternateHreflangSitemap(RelAlternateHreflangSitemap):
     protocol = 'https'
 
     def alternate_hreflangs(self, item):
-        return [('en-us', item.alternative_url),]
+        return [('en-us', item.alternative_url)]
 
     def items(self):
         return FooItem._default_manager.exclude(alternative_url=None)
 
+
 class FooImagesSitemap(ImagesSitemap):
-    
+
     def __init__(self):
         super(FooImagesSitemap, self).__init__({
-            'queryset': FooItem._default_manager.exclude(image=None), # queryset
-            'image_location_field': 'image', # image location
-            'image_title_field': 'title', # image title
-            'location_field': 'get_absolute_url' # an absolute URL of the page
-                                             # where image is shown    
+            'queryset': FooItem._default_manager.exclude(image=None),  # qs
+            'image_location_field': 'image',  # image location
+            'image_title_field': 'title',  # image title
+            'location_field': 'get_absolute_url'  # an absolute URL of the page
+                                                  # where image is shown
         }, changefreq='weekly')
-    
-
