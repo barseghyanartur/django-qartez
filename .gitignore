@@ -5,15 +5,22 @@
 .git/
 .hgtags
 .idea/
+*.py,cover
+.cache/
 
-example/db/
-example/tmp/
-example/media/static/
-example/static/
+examples/db/
+examples/tmp/
+examples/media/static/
+examples/static/
+examples/settings/local_settings.py
 builddocs/
+/htmlcov/
 builddocs.zip
 build/
 dist/
 src/django_qartez.egg-info
 MANIFEST.in~
 .tox/
+./cache/
+.coverage
+/examples/logs/

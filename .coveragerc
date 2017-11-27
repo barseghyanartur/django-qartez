@@ -1,0 +1,7 @@
+[run]
+omit =
+    src/qartez/tests/*
+    examples/example/settings/*
+    examples/example/settings.py
+    examples/example/local_settings.py
+    examples/example/wsgi.py

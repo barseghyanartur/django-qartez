@@ -4,7 +4,7 @@ from six import PY3
 from six.moves.urllib import parse as urlparse
 
 from django.contrib.sitemaps import Sitemap, GenericSitemap
-from django.core.urlresolvers import reverse_lazy
+
 from django.contrib.sites.models import Site
 from django.core.exceptions import ImproperlyConfigured
 
@@ -14,23 +14,35 @@ from .settings import (
     CHANGEFREQ
 )
 
+from nine import versions
+
+if versions.DJANGO_GTE_1_11:
+    from django.urls import reverse_lazy
+else:
+    from django.core.urlresolvers import reverse_lazy
+
 PY2 = not PY3
 
 __title__ = 'django-qartez'
 __author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
-__all__ = ('ImagesSitemap', 'StaticSitemap', 'RelAlternateHreflangSitemap',)
+__all__ = (
+    'ImagesSitemap',
+    'StaticSitemap',
+    'RelAlternateHreflangSitemap',
+)
 
 
 class ImagesSitemap(GenericSitemap):
-    """
-    Class for image sitemap. Implemented accordings to specs specifed by Google
+    """Class for image sitemap.
+
+    Implemented according to specs specified by Google
     http://www.google.com/support/webmasters/bin/answer.py?answer=178636
 
     :example:
     >>> from qartez.sitemaps import ImagesSitemap
     >>>
     >>> foo_item_images_info_dict = {
-    >>>     'queryset': FooItem._default_manager.exclude(image=None), # queryset
+    >>>     'queryset': FooItem._default_manager.exclude(image=None), # qs
     >>>     'image_location_field': 'image', # image location
     >>>     'image_title_field': 'title', # image title
     >>>     'location_field': 'get_absolute_url' # an absolute URL of the page
@@ -162,7 +174,11 @@ class ImagesSitemap(GenericSitemap):
                         protocol, unicode(domain), unicode(loc)
                     )
                 else:
-                    loc = "{0}://{1}{2}".format(protocol, str(domain), str(loc))
+                    loc = "{0}://{1}{2}".format(
+                        protocol,
+                        str(domain),
+                        str(loc)
+                    )
 
             image_loc = self.__get('image_location', item, None)
             if image_loc and PREPEND_IMAGE_LOC_URL_WITH_SITE_URL:
@@ -265,8 +281,14 @@ class StaticSitemap(Sitemap):
         """Location."""
         return obj['location']
 
-    def add_named_pattern(self, viewname, urlconf=None, args=[], kwargs=None, \
-                          lastmod=None, changefreq=None, priority=None):
+    def add_named_pattern(self,
+                          viewname,
+                          urlconf=None,
+                          args=[],
+                          kwargs=None,
+                          lastmod=None,
+                          changefreq=None,
+                          priority=None):
         """Ad a named pattern to the items list.
 
         :param str viewname:
@@ -355,7 +377,7 @@ class RelAlternateHreflangSitemap(Sitemap):
             """your sitemap class. Refer to "qartez" app documentation for """
             """details and examples."""
         )
-        
+
     def _full_url(self, protocol, domain, path):
         """Full URL."""
         return "{0}://{1}{2}".format(protocol, domain, path)
@@ -405,13 +427,21 @@ class RelAlternateHreflangSitemap(Sitemap):
 
         urls = []
         for item in self.paginator.page(page).object_list:
-            loc = self._full_url(protocol, domain, self.__get('location', item))
+            loc = self._full_url(
+                protocol,
+                domain,
+                self.__get('location', item)
+            )
             url_info = {
                 'location': loc,
                 'lastmod': self.__get('lastmod', item, None),
                 'changefreq': self.__get('changefreq', item, None),
                 'priority': self.__get('priority', item, None),
-                'alternate_hreflangs': self._render_alternate_hreflangs(protocol, domain, item),
+                'alternate_hreflangs': self._render_alternate_hreflangs(
+                    protocol,
+                    domain,
+                    item
+                ),
             }
 
             urls.append(url_info)

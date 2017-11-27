@@ -4,7 +4,10 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 
+from six import python_2_unicode_compatible
+
 FOO_IMAGES_STORAGE_PATH = 'foo-images'
+
 
 def _foo_images(instance, filename):
     """
@@ -15,6 +18,7 @@ def _foo_images(instance, filename):
     return '%s/%s' % (FOO_IMAGES_STORAGE_PATH, filename.replace(' ', '-'))
 
 
+@python_2_unicode_compatible
 class FooItem(models.Model):
     """
     Foo item.
@@ -28,11 +32,11 @@ class FooItem(models.Model):
     date_created = models.DateTimeField(_("Date created"), blank=True, null=True, auto_now_add=True, editable=False)
     date_updated = models.DateTimeField(_("Date updated"), blank=True, null=True, auto_now=True, editable=False)
 
-    class Meta:
+    class Meta(object):
         verbose_name = _("Foo item")
         verbose_name_plural = _("Foo items")
 
-    def __unicode__(self):
+    def __str__(self):
         return self.title
 
     def get_absolute_url(self):

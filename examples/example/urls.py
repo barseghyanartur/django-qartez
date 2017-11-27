@@ -9,8 +9,11 @@ from django.contrib.sitemaps.views import sitemap as sitemaps_sitemap
 from qartez.views import render_images_sitemap
 
 from foo.sitemap import (
-    foo_item_images_sitemap, foo_static_sitemap, FooItemSitemap,
-    FooItemAlternateHreflangSitemap, FooImagesSitemap
+    foo_item_images_sitemap,
+    foo_static_sitemap,
+    FooItemSitemap,
+    FooItemAlternateHreflangSitemap,
+    FooImagesSitemap,
 )
 
 from foo import urls as foo_urls
@@ -55,10 +58,22 @@ urlpatterns = [
         {
             'sitemaps': sitemaps,
             'template_name': 'qartez/rel_alternate_hreflang_sitemap.xml'
-        }
+        },
+        name='django.contrib.sitemaps.views.sitemap'
     ),
 ]
 
+# Serving media and static in debug/developer mode.
 if settings.DEBUG:
     urlpatterns += staticfiles_urlpatterns()
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(
+        settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT
+    )
+
+    if settings.DEBUG_TOOLBAR is True:
+        import debug_toolbar
+
+        urlpatterns = [
+            url(r'^__debug__/', include(debug_toolbar.urls)),
+        ] + urlpatterns

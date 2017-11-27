@@ -1,15 +1,15 @@
 # Django settings for resato_portal project.
-import os
-PROJECT_DIR = lambda base : os.path.abspath(os.path.join(os.path.dirname(__file__), base).replace('\\','/'))
+from .core import PROJECT_DIR
 
 DEBUG = True
 DEBUG_TOOLBAR = not True
-TEMPLATE_DEBUG = DEBUG
+# TEMPLATE_DEBUG = DEBUG
+DEBUG_TEMPLATE = DEBUG
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': PROJECT_DIR('../db/example.db'),                      # Or path to database file if using sqlite3.
+        'NAME': PROJECT_DIR('../../db/example.db'),                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
         'USER': '',
         'PASSWORD': '',
@@ -21,6 +21,6 @@ DATABASES = {
 INTERNAL_IPS = ('127.0.0.1',)
 
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = PROJECT_DIR('../tmp')
+EMAIL_FILE_PATH = PROJECT_DIR('../../tmp')
 
 DEFAULT_FROM_EMAIL = '<no-reply@example.com>'

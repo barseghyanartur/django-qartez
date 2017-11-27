@@ -40,7 +40,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'six>=1.1.0',
-        # 'django-nine>=0.1.7'
+        'django-nine>=0.1.7'
     ],
     tests_require=[
         'radar>=0.3',

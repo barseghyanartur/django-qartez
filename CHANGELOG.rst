@@ -1,11 +1,12 @@
 Release history
 ===============
-0.7 (not released yet)
-----------------------
-2016-07-28
+0.7
+---
+2017-11-27
 
-- Django 1.8 and 1.9 support.
-- Fixes.
+- Django 1.8, 1.9, 1.10 and 1.11 support.
+- Minor fixes.
+- Improved tests, PyTest test runner, coverage, introduce factories.
 
 0.6
 ---

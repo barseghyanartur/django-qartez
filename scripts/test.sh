@@ -1,4 +1,5 @@
+#!/usr/bin/env bash
 reset
 #./scripts/uninstall.sh
 #./scripts/install.sh
-python example/example/manage.py test qartez --traceback -v 3
+python examples/example/manage.py test qartez --traceback -v 3

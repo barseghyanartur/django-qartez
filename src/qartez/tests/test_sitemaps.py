@@ -1,22 +1,34 @@
-import unittest
+from __future__ import unicode_literals
+
 import os
+import unittest
+
+import pytest
 
 __title__ = 'qartez.tests.test_sitemaps'
 __author__ = 'Artur Barseghyan'
-__copyright__ = 'Copyright (c) 2013-2014 Artur Barseghyan'
+__copyright__ = '2013-2017 Artur Barseghyan'
 __license__ = 'GPL 2.0/LGPL 2.1'
 
 
 # Skipping from non-Django tests.
 if os.environ.get("DJANGO_SETTINGS_MODULE", None):
     from django.test import Client
+    from django.test import TestCase
 
     from qartez.tests.base import print_info
 
-    class QartezTest(unittest.TestCase):
+    import factories
+
+    @pytest.mark.django_db
+    class QartezTest(TestCase):
         """
         Testing sitemaps.
         """
+
+        # fixtures = ['initial_data.json',]
+
+        pytestmark = pytest.mark.django_db
 
         def setUp(self):
             # Testing the URLs
@@ -27,8 +39,10 @@ if os.environ.get("DJANGO_SETTINGS_MODULE", None):
                 'static sitemap': '/sitemap-foo-static.xml',
                 'alternative hreflang sitemap':
                     '/sitemap-foo-items-alternate-hreflang.xml',
-                'images custom sitemap' : '/sitemap-foo-images-custom.xml',
+                'images custom sitemap': '/sitemap-foo-images-custom.xml',
             }
+
+            factories.FooItemFactory.create_batch(100)
 
         @print_info
         def test_all_sitemaps(self):
@@ -44,8 +58,8 @@ if os.environ.get("DJANGO_SETTINGS_MODULE", None):
                 flow.append(
                     'Response status code for {0} is {1}'.format(
                         description, response.status_code
-                        )
                     )
+                )
 
             return flow
 
@@ -55,9 +69,11 @@ if os.environ.get("DJANGO_SETTINGS_MODULE", None):
             flow = []
             c = Client()
             response = c.get('/sitemap-foo-items-alternate-hreflang.xml', {})
-            self.assertTrue('hreflang="en-us"' in response.content)
-            self.assertTrue('rel="alternate"' in response.content)
-            self.assertTrue('hreflang="en-us"' in response.content)
+            response_content = response.content.decode()
+            # import ipdb; ipdb.set_trace()
+            self.assertTrue('hreflang="en-us"' in response_content)
+            self.assertTrue('rel="alternate"' in response_content)
+            # self.assertTrue(b'hreflang="en-us"' in response.content)
 
         @print_info
         def test_02_static_sitemap(self):
@@ -65,8 +81,9 @@ if os.environ.get("DJANGO_SETTINGS_MODULE", None):
             flow = []
             c = Client()
             response = c.get('/sitemap-foo-static.xml', {})
+            response_content = response.content.decode()
             self.assertTrue('http://example.com/foo/'
-                            'contact/' in response.content)
+                            'contact/' in response_content)
 
         @print_info
         def test_03_images_sitemap(self):
@@ -74,11 +91,12 @@ if os.environ.get("DJANGO_SETTINGS_MODULE", None):
             flow = []
             c = Client()
             response = c.get('/sitemap-foo-images.xml', {})
+            response_content = response.content.decode()
             self.assertTrue('http://www.google.com/'
-                            'schemas/sitemap-image/1.1' in response.content)
-            self.assertTrue('<image:title>' in response.content)
-            self.assertTrue('<image:loc>' in response.content)
-            self.assertTrue('<image:image>' in response.content)
+                            'schemas/sitemap-image/1.1' in response_content)
+            self.assertTrue('<image:title>' in response_content)
+            self.assertTrue('<image:loc>' in response_content)
+            self.assertTrue('<image:image>' in response_content)
 
         @print_info
         def test_04_sitemap_of_sitemaps(self):
@@ -86,14 +104,15 @@ if os.environ.get("DJANGO_SETTINGS_MODULE", None):
             flow = []
             c = Client()
             response = c.get('/sitemap.xml', {})
+            response_content = response.content.decode()
             self.assertTrue('<sitemapindex xmlns="'
                             'http://www.sitemaps.org/'
-                            'schemas/sitemap/0.9">' in response.content)
+                            'schemas/sitemap/0.9">' in response_content)
             self.assertTrue('https://example.com/'
                             'sitemap-foo-items-alternate-'
-                            'hreflang.xml' in response.content)
+                            'hreflang.xml' in response_content)
             self.assertTrue('http://example.com/sitemap-foo-'
-                            'items.xml' in response.content)
+                            'items.xml' in response_content)
 
 
 if __name__ == "__main__":

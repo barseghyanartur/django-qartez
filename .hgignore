@@ -3,16 +3,22 @@ syntax: regexp
 \.hgignore~
 \.gitignore~
 \.git/
+\.py,cover
 
 ^\.idea/
-^example/db/
-^example/tmp/
-^example/static/
+^examples/db/
+^examples/tmp/
+^examples/static/
+^examples/media/static/
+^\.coverage
+^examples/logs/
+^htmlcov/
+^.cache/
 ^builddocs/
 ^builddocs.zip
 ^build/
 ^dist/
 ^\.tox/
 ^src/django_qartez\.egg-info
-local_settings\.py
+examples/example/settings/local_settings.py
 MANIFEST\.in~
