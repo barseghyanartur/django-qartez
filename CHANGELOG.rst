@@ -1,10 +1,32 @@
-Release history
-===============
+Release history and notes
+=========================
+`Sequence based identifiers
+<http://en.wikipedia.org/wiki/Software_versioning#Sequence-based_identifiers>`_
+are used for versioning (schema follows below):
+
+.. code-block:: text
+
+    major.minor[.revision]
+
+- It's always safe to upgrade within the same minor version (for example, from
+  0.3 to 0.3.4).
+- Minor version changes might be backwards incompatible. Read the
+  release notes carefully before upgrading (for example, when upgrading from
+  0.3.4 to 0.4).
+- All backwards incompatible changes are mentioned in this document.
+
+0.7.1
+-----
+2017-11-27
+
+- Fixes in docs.
+
 0.7
 ---
 2017-11-27
 
-- Django 1.8, 1.9, 1.10 and 1.11 support.
+- Django 1.8, 1.9, 1.10 and 1.11 support. Drop support for older Django
+  versions.
 - Minor fixes.
 - Improved tests, PyTest test runner, coverage, introduce factories.
 
