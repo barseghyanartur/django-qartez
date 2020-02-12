@@ -2,7 +2,7 @@ import datetime
 
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from six import python_2_unicode_compatible
 
