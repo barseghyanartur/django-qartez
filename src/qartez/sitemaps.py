@@ -14,7 +14,7 @@ from .settings import (
     CHANGEFREQ
 )
 
-from nine import versions
+from django_nine import versions
 
 if versions.DJANGO_GTE_1_11:
     from django.urls import reverse_lazy
