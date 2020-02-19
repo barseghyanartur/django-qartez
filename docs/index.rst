@@ -15,6 +15,10 @@ The missing XML sitemaps for Django.
    :target: http://travis-ci.org/barseghyanartur/django-qartez
    :alt: Build Status
 
+.. image:: https://readthedocs.org/projects/django-qartez/badge/?version=latest
+    :target: http://django-qartez.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
+
 .. image:: https://img.shields.io/badge/license-GPL--2.0--only%20OR%20LGPL--2.1--or--later-blue.svg
    :target: https://github.com/barseghyanartur/django-qartez/#License
    :alt: GPL-2.0-only OR LGPL-2.1-or-later
