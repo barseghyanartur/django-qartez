@@ -54,7 +54,7 @@ copyright = u'2013-2020, Artur Barseghyan <artur.barseghyan@gmail.com>'
 # built documents.
 #
 # The short X.Y version.
-version = '0.8'
+version = '0.8.1'
 # The full version, including alpha/beta/rc tags.
 release = version
 
