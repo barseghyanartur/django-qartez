@@ -44,7 +44,7 @@ At the moment the following XML sitemaps are implemented:
 
 Prerequisites
 =============
-- Django: 1.11, 2.0, 2.1, 2.2
+- Django: 1.11, 2.0, 2.1, 2.2 and 3.0.
 - Python: 2.7, 3.5, 3.6, 3.7, 3.8
 
 Installation
