@@ -26,8 +26,6 @@ if os.environ.get("DJANGO_SETTINGS_MODULE", None):
         Testing sitemaps.
         """
 
-        # fixtures = ['initial_data.json',]
-
         pytestmark = pytest.mark.django_db
 
         def setUp(self):
@@ -49,28 +47,18 @@ if os.environ.get("DJANGO_SETTINGS_MODULE", None):
             """
             Test the all sitemaps.
             """
-            flow = []
             # Testing view with signed URL
             client = Client()
             for description, url in self.urls.items():
                 response = client.get(url, {})
                 self.assertTrue(response.status_code in (200, 201, 202))
-                flow.append(
-                    'Response status code for {0} is {1}'.format(
-                        description, response.status_code
-                    )
-                )
-
-            return flow
 
         @print_info
         def test_01_alternative_hreflang_sitemap(self):
             """Test alternate hreflang sitemap."""
-            flow = []
             c = Client()
             response = c.get('/sitemap-foo-items-alternate-hreflang.xml', {})
             response_content = response.content.decode()
-            # import ipdb; ipdb.set_trace()
             self.assertTrue('hreflang="en-us"' in response_content)
             self.assertTrue('rel="alternate"' in response_content)
             # self.assertTrue(b'hreflang="en-us"' in response.content)
@@ -88,7 +76,6 @@ if os.environ.get("DJANGO_SETTINGS_MODULE", None):
         @print_info
         def test_03_images_sitemap(self):
             """Test images sitemap."""
-            flow = []
             c = Client()
             response = c.get('/sitemap-foo-images.xml', {})
             response_content = response.content.decode()
@@ -101,7 +88,6 @@ if os.environ.get("DJANGO_SETTINGS_MODULE", None):
         @print_info
         def test_04_sitemap_of_sitemaps(self):
             """Test sitemap of sitemaps."""
-            flow = []
             c = Client()
             response = c.get('/sitemap.xml', {})
             response_content = response.content.decode()

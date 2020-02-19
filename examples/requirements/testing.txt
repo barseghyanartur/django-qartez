@@ -1,2 +1,7 @@
--r django_1_11.txt
--r test.txt
+factory_boy==2.11.1
+Faker==1.0.4
+Pillow==3.4.2
+pytest-cov==2.6.1
+pytest-django==3.4.8
+pytest==4.4.0
+tox==3.8.6

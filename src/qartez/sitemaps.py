@@ -4,27 +4,21 @@ from six import PY3
 from six.moves.urllib import parse as urlparse
 
 from django.contrib.sitemaps import Sitemap, GenericSitemap
-
 from django.contrib.sites.models import Site
 from django.core.exceptions import ImproperlyConfigured
+from django.urls import reverse_lazy
 
 from .constants import REL_ALTERNATE_HREFLANG_SITEMAP_TEMPLATE
 from .settings import (
-    PREPEND_LOC_URL_WITH_SITE_URL, PREPEND_IMAGE_LOC_URL_WITH_SITE_URL,
-    CHANGEFREQ
+    PREPEND_LOC_URL_WITH_SITE_URL,
+    PREPEND_IMAGE_LOC_URL_WITH_SITE_URL,
+    CHANGEFREQ,
 )
-
-from django_nine import versions
-
-if versions.DJANGO_GTE_1_11:
-    from django.urls import reverse_lazy
-else:
-    from django.core.urlresolvers import reverse_lazy
 
 PY2 = not PY3
 
-__title__ = 'django-qartez'
 __author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
+__license__ = 'GPL-2.0-only OR LGPL-2.1-or-later'
 __all__ = (
     'ImagesSitemap',
     'StaticSitemap',

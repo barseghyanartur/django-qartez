@@ -1,6 +1,5 @@
 # Django settings for example project.
 import os
-from nine import versions
 
 from .core import PROJECT_DIR, gettext
 
@@ -88,7 +87,6 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
 
 # Make this unique, and don't share it with anybody.
@@ -122,100 +120,39 @@ else:
     ]
 
 
-if versions.DJANGO_GTE_1_10:
-    TEMPLATES = [
-        {
-            'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            # 'APP_DIRS': True,
-            'DIRS': [PROJECT_DIR(os.path.join('..', 'templates'))],
-            'OPTIONS': {
-                'context_processors': [
-                    "django.template.context_processors.debug",
-                    'django.template.context_processors.request',
-                    "django.contrib.auth.context_processors.auth",
-                    "django.contrib.messages.context_processors.messages",
-                    # "context_processors.testing",  # Testing
-                ],
-                'loaders': _TEMPLATE_LOADERS,
-                'debug': DEBUG_TEMPLATE,
-            }
-        },
-    ]
-elif versions.DJANGO_GTE_1_8:
-    TEMPLATES = [
-        {
-            'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            # 'APP_DIRS': True,
-            'DIRS': [PROJECT_DIR(os.path.join('..', 'templates'))],
-            'OPTIONS': {
-                'context_processors': [
-                    "django.contrib.auth.context_processors.auth",
-                    "django.template.context_processors.debug",
-                    "django.template.context_processors.i18n",
-                    "django.template.context_processors.media",
-                    "django.template.context_processors.static",
-                    "django.template.context_processors.tz",
-                    "django.contrib.messages.context_processors.messages",
-                    "django.template.context_processors.request",
-                    # "context_processors.testing",  # Testing
-                ],
-                'loaders': _TEMPLATE_LOADERS,
-                'debug': DEBUG_TEMPLATE,
-            }
-        },
-    ]
-else:
-    TEMPLATE_DEBUG = DEBUG_TEMPLATE
 
-    # List of callables that know how to import templates from various
-    # sources.
-    TEMPLATE_LOADERS = _TEMPLATE_LOADERS
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        # 'APP_DIRS': True,
+        'DIRS': [PROJECT_DIR(os.path.join('..', 'templates'))],
+        'OPTIONS': {
+            'context_processors': [
+                "django.template.context_processors.debug",
+                'django.template.context_processors.request',
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                # "context_processors.testing",  # Testing
+            ],
+            'loaders': _TEMPLATE_LOADERS,
+            'debug': DEBUG_TEMPLATE,
+        }
+    },
+]
 
-    TEMPLATE_CONTEXT_PROCESSORS = (
-        "django.contrib.auth.context_processors.auth",
-        "django.core.context_processors.debug",
-        "django.core.context_processors.i18n",
-        "django.core.context_processors.media",
-        "django.core.context_processors.static",
-        "django.core.context_processors.tz",
-        "django.contrib.messages.context_processors.messages",
-        "django.core.context_processors.request",
-    )
-
-    TEMPLATE_DIRS = (
-        # Put strings here, like "/home/html/django_templates" or
-        # "C:/www/django/templates".
-        # Always use forward slashes, even on Windows.
-        # Don't forget to use absolute paths, not relative paths.
-        PROJECT_DIR(os.path.join('..', 'templates')),
-    )
-
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'wsgi.application'
-
-# TEMPLATE_DIRS = (
-#     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-#     # Always use forward slashes, even on Windows.
-#     # Don't forget to use absolute paths, not relative paths.
-#     PROJECT_DIR('templates'),
-# )
-
-# FIXTURE_DIRS = (
-#   PROJECT_DIR(os.path.join('..', '..', 'fixtures')),
-# )
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -234,10 +171,6 @@ INSTALLED_APPS = (
 
     'foo',  # Our example app
 )
-
-# django-lime conf
-LIME_SITE_LOGO = ''
-LIME_SITE_TEAM = ''
 
 # A sample logging configuration. The only tangible logging
 # performed by this configuration is to send an email to
@@ -303,7 +236,7 @@ except:
 
 if DEBUG and DEBUG_TOOLBAR:
     # debug_toolbar
-    MIDDLEWARE_CLASSES += (
+    MIDDLEWARE += (
         'debug_toolbar.middleware.DebugToolbarMiddleware',
     )
 

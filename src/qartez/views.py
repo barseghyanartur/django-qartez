@@ -3,8 +3,8 @@ from django.template import loader
 from django.utils.encoding import smart_str
 from django.core.paginator import EmptyPage, PageNotAnInteger
 
-__title__ = 'qartez.views'
 __author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
+__license__ = 'GPL-2.0-only OR LGPL-2.1-or-later'
 __all__ = ('render_images_sitemap',)
 
 

@@ -1,8 +1,0 @@
--r common.txt
--r test.txt
-
-#Django>=1.9<=1.10
-Django==1.9.13
-django-debug-toolbar
-django-nine
-sqlparse==0.2.2

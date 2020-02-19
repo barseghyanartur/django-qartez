@@ -1,8 +1,10 @@
-__title__ = 'qartez.defaults'
 __author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
+__license__ = 'GPL-2.0-only OR LGPL-2.1-or-later'
 __all__ = (
-    'PREPEND_LOC_URL_WITH_SITE_URL', 'PREPEND_IMAGE_LOC_URL_WITH_SITE_URL',
-    'CHANGEFREQ', 'DEBUG'
+    'PREPEND_LOC_URL_WITH_SITE_URL',
+    'PREPEND_IMAGE_LOC_URL_WITH_SITE_URL',
+    'CHANGEFREQ',
+    'DEBUG',
 )
 
 # When set to True, current site's domain is prepended to the location URL.
@@ -16,6 +18,6 @@ PREPEND_IMAGE_LOC_URL_WITH_SITE_URL = True
 # http://www.sitemaps.org/protocol.html
 CHANGEFREQ = [
     'always', 'hourly', 'daily', 'weekly', 'monthly', 'yearly', 'never'
-    ]
+]
 
 DEBUG = False

@@ -19,17 +19,19 @@ http://www.sitemaps.org/protocol.html
 
 from .conf import get_setting
 
-__title__ = 'qartez.settings'
 __author__ = 'Artur Barseghyan <artur.barseghyan@gmail.com>'
+__license__ = 'GPL-2.0-only OR LGPL-2.1-or-later'
 __all__ = (
-    'PREPEND_LOC_URL_WITH_SITE_URL', 'PREPEND_IMAGE_LOC_URL_WITH_SITE_URL',
-    'CHANGEFREQ', 'DEBUG',
+    'PREPEND_LOC_URL_WITH_SITE_URL',
+    'PREPEND_IMAGE_LOC_URL_WITH_SITE_URL',
+    'CHANGEFREQ',
+    'DEBUG',
 )
 
 PREPEND_LOC_URL_WITH_SITE_URL = get_setting('PREPEND_LOC_URL_WITH_SITE_URL')
 PREPEND_IMAGE_LOC_URL_WITH_SITE_URL = get_setting(
     'PREPEND_IMAGE_LOC_URL_WITH_SITE_URL'
-    )
+)
 CHANGEFREQ = get_setting('CHANGEFREQ')
 
 DEBUG = get_setting('DEBUG')

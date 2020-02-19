@@ -3,10 +3,9 @@ from django.conf import settings
 from factory import (
     DjangoModelFactory,
     PostGenerationMethodCall,
-    Sequence
+    Sequence,
+    Faker
 )
-
-from .factory_faker import Faker
 
 __all__ = (
     'TEST_USERNAME',

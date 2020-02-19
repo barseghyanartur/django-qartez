@@ -1,8 +1,31 @@
 =============
 django-qartez
 =============
-This app aims to provide the missing XML sitemapsf for Django. At the moment
-the following XML sitemaps are implemented:
+The missing XML sitemaps for Django.
+
+.. image:: https://img.shields.io/pypi/v/django-qartez.svg
+   :target: https://pypi.python.org/pypi/django-qartez
+   :alt: PyPI Version
+
+.. image:: https://img.shields.io/pypi/pyversions/django-qartez.svg
+    :target: https://pypi.python.org/pypi/django-qartez/
+    :alt: Supported Python versions
+
+.. image:: https://img.shields.io/travis/barseghyanartur/django-qartez/master.svg
+   :target: http://travis-ci.org/barseghyanartur/django-qartez
+   :alt: Build Status
+
+.. image:: https://img.shields.io/badge/license-GPL--2.0--only%20OR%20LGPL--2.1--or--later-blue.svg
+   :target: https://github.com/barseghyanartur/django-qartez/#License
+   :alt: GPL-2.0-only OR LGPL-2.1-or-later
+
+.. image:: https://coveralls.io/repos/github/barseghyanartur/django-qartez/badge.svg?branch=master&service=github
+    :target: https://coveralls.io/github/barseghyanartur/django-qartez?branch=master
+    :alt: Coverage
+
+Features
+========
+At the moment the following XML sitemaps are implemented:
 
 - `qartez.sitemaps.ImagesSitemap`: XML images sitemaps according to the `specs
   <http://www.google.com/support/webmasters/bin/answer.py?answer=178636>`__.
@@ -17,8 +40,8 @@ the following XML sitemaps are implemented:
 
 Prerequisites
 =============
-- Django: 1.8, 1.9, 1.10, 1.11
-- Python: 2.7, 3.4, 3.5, 3.6
+- Django: 1.11, 2.0, 2.1, 2.2
+- Python: 2.7, 3.5, 3.6, 3.7, 3.8
 
 Installation
 ============
@@ -29,12 +52,6 @@ Latest stable version on PyPI:
 .. code-block:: sh
 
     pip install django-qartez
-
-Latest stable version from BitBucket:
-
-.. code-block:: sh
-
-    pip install https://bitbucket.org/barseghyanartur/django-qartez/get/stable.tar.gz
 
 Latest stable version from GitHub:
 
@@ -58,9 +75,8 @@ Usage and examples
 ==================
 We have an imaginary foo app.
 
-The full source code of the example below `here
-<http://bitbucket.org/barseghyanartur/django-qartez/src>`_ (see the
-`example` directory).
+See the `example code
+<https://github.com/barseghyanartur/django-qartez/tree/master/examples/example>`_.
 
 foo/sitemap.py
 --------------
@@ -69,7 +85,7 @@ foo/sitemap.py
     from django.contrib.sitemaps import Sitemap
 
     from qartez.sitemaps import (
-       ImagesSitemap, StaticSitemap, RelAlternateHreflangSitemap
+        ImagesSitemap, StaticSitemap, RelAlternateHreflangSitemap
     )
 
     from foo.models import FooItem
@@ -137,17 +153,23 @@ urls.py
         'foo-static': foo_static_sitemap
     }
 
-    urlpatterns = patterns('',
+    urlpatterns = [
         # Sitemaps
-        (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.index', \
-        {'sitemaps': sitemaps}),
+        (
+            r'^sitemap\.xml$',
+            'django.contrib.sitemaps.views.index',
+            {'sitemaps': sitemaps},
+        ),
 
-        (r'^sitemap-foo-images\.xml$', 'qartez.views.render_images_sitemap', \
-        {'sitemaps': foo_item_images_sitemap}),
-    )
+        (
+            r'^sitemap-foo-images\.xml$',
+            'qartez.views.render_images_sitemap',
+            {'sitemaps': foo_item_images_sitemap},
+        ),
+    ]
 
 Note, that it's necessary to add the
-'template_name': 'qartez/rel_alternate_hreflang_sitemap.xml'
+```'template_name': 'qartez/rel_alternate_hreflang_sitemap.xml'```
 only in case if you are going to use the ``qartez.RelAlternateHreflangSitemap``.
 
 .. code-block:: python
@@ -172,23 +194,33 @@ foo/models.py
         title = models.CharField(_("Title"), max_length=100)
         slug = models.SlugField(_("Slug"), unique=True)
         body = models.TextField(_("Body"))
-        date_published = models.DateTimeField(_("Date published"), blank=True,
-                                              null=True,
-                                              default=datetime.datetime.now())
+        date_published = models.DateTimeField(
+            _("Date published"),
+            blank=True,
+            null=True,
+            auto_now_add=True
+        )
 
         # Image to be used for XML images sitemap.
-        image = models.ImageField(_("Headline image"), blank=True, null=True,
-                                  upload_to='foo-images')
+        image = models.ImageField(
+            _("Headline image"),
+            blank=True,
+            null=True,
+            upload_to='foo-images'
+        )
 
         # URL to be used for alternative hreflang attribute.
-        alternative_url = models.URLField(_("Alternative URL"), blank=True,
-                                          null=True)
+        alternative_url = models.URLField(
+            _("Alternative URL"),
+            blank=True,
+            null=True
+        )
 
         class Meta:
            verbose_name = _("Foo item")
            verbose_name_plural = _("Foo items")
 
-        def __unicode__(self):
+        def __str__(self):
            return self.title
 
         def get_absolute_url(self):
@@ -206,8 +238,11 @@ foo/views.py
     # Service welcome page
     def welcome(request, template_name='foo/welcome.html'):
         context = {}
-        return render_to_response(template_name, context, \
-                                  context_instance=RequestContext(request))
+        return render_to_response(
+            template_name,
+            context,
+            context_instance=RequestContext(request)
+        )
 
     # Service contact page
     def contact(request, template_name='foo/contact.html'):
@@ -231,7 +266,7 @@ foo/urls.py
 
 License
 =======
-GPL 2.0/LGPL 2.1
+GPL-2.0-only OR LGPL-2.1-or-later
 
 Support
 =======

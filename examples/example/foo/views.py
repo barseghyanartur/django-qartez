@@ -1,5 +1,5 @@
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
+from django.http import Http404
 
 from foo.models import FooItem
 
@@ -17,8 +17,7 @@ def browse(request, template_name='foo/browse.html'):
 
     context = {'items': queryset}
 
-    return render_to_response(template_name, context,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context)
 
 
 def detail(request, slug, template_name='foo/detail.html'):
@@ -39,8 +38,7 @@ def detail(request, slug, template_name='foo/detail.html'):
 
     context = {'item': item}
 
-    return render_to_response(template_name, context,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context)
 
 
 def welcome(request, template_name='foo/welcome.html'):
@@ -51,8 +49,7 @@ def welcome(request, template_name='foo/welcome.html'):
     :return django.http.HttpResponse:
     """
     context = {}
-    return render_to_response(template_name, context,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context)
 
 
 def contact(request, template_name='foo/contact.html'):
@@ -63,5 +60,4 @@ def contact(request, template_name='foo/contact.html'):
     :return django.http.HttpResponse:
     """
     context = {}
-    return render_to_response(template_name, context,
-                              context_instance=RequestContext(request))
+    return render(request, template_name, context)

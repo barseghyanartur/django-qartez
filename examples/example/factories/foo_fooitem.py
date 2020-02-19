@@ -2,12 +2,10 @@ import os
 import random
 
 from django.conf import settings
-from factory import DjangoModelFactory, SubFactory, LazyAttribute
+from factory import DjangoModelFactory, LazyAttribute, Faker
 from factory.fuzzy import FuzzyChoice
 
 from foo.models import FooItem
-
-from .factory_faker import Faker
 
 __all__ = ('FooItemFactory',)
 
