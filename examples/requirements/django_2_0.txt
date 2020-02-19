@@ -1,8 +1,8 @@
 -r common.txt
--r test3.txt
+-r test.txt
 
 Django>=2.0,<2.1
 django-debug-toolbar==2.1
 django-debug-toolbar-force==0.1.7
 django-nine
-sqlparse==0.2.2
+sqlparse>=0.2.2
