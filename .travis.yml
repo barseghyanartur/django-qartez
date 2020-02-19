@@ -44,6 +44,12 @@ install: pip install -r examples/requirements/testing.txt
 
 script: travis_retry tox -e $TOX_ENV
 
+before_script:
+  - mkdir -p examples/logs/
+  - mkdir -p examples/media/static
+  - mkdir -p examples/logs/
+  - mkdir -p examples/db/
+
 after_success:
   - pip install coveralls
   - coveralls
